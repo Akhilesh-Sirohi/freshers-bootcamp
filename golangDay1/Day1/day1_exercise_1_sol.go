@@ -1,8 +1,8 @@
 package main
 
 import (
-	"errors"
 	"fmt"
+	"math/rand"
 )
 
 type matrix struct {
@@ -16,6 +16,9 @@ func createMatrix(number_of_rows int, number_of_cols int) matrix{
 	elements:= make([][]int, number_of_rows);
 	for i:=0;i<number_of_rows;i++{
 		elements[i]= make([] int,number_of_cols);
+		for j:=0;j<number_of_cols;j++{
+			elements[i][j]=rand.Intn(10);
+		}
 	}
 	return matrix{number_of_rows,number_of_cols,elements}
 }
@@ -28,13 +31,12 @@ func getColumns(name matrix) int{
 func setElement(name matrix,i int, j int, value int) {
 	name.elements[i][j]=value;
 }
-func addMatrix(name1 matrix, name2 matrix) (matrix,error){
+func addMatrix(name1 matrix, name2 matrix) matrix{
 	ans:= matrix{0,0,make ([][]int,1)}
-	var x error=nil
 	if getRows(name1)!=getRows(name2) || getColumns(name1)!=getColumns(name2) {
 		//errors.New constructs a basic error value with the given error message.
 		//fmt.Println("Failed: Can't add both matrix as their dimensions are different"
-		x=errors.New("Failed: Can't add both matrix as their dimensions are different")
+		//x=errors.New("Failed: Can't add both matrix as their dimensions are different")
 	} else {
 		ans = name1
 		for i := 0; i < name1.number_of_rows; i++ {
@@ -43,7 +45,18 @@ func addMatrix(name1 matrix, name2 matrix) (matrix,error){
 			}
 		}
 	}
-	return ans,x;
+	return ans;
+}
+func print(name matrix) {
+	fmt.Printf("{")
+	for i := 0; i < name.number_of_rows; i++ {
+		fmt.Printf("%s", "{")
+		for j := 0; j < name.number_of_cols; j++ {
+			fmt.Printf("%d,", name.elements[i][j])
+		}
+		fmt.Printf("},")
+	}
+	fmt.Printf("}")
 }
 func main() {
 	x := createMatrix(4,5);
@@ -54,6 +67,6 @@ func main() {
 	fmt.Println(getRows(x))
 	fmt.Println(getColumns(x))
 	fmt.Println(x.elements)
-	fmt.Println(addMatrix(x,y))
+	print(addMatrix(x,y))
 	fmt.Println(addMatrix(createMatrix(4,5),createMatrix(6,3)))
 }
