@@ -1,4 +1,4 @@
-package Models
+package Product
 
 
 //defines the product struct

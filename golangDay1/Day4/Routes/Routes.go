@@ -15,7 +15,7 @@ func SetupRouter() *gin.Engine {
 		grp1.GET("product", Controllers.GetProducts)
 		grp1.POST("product", Controllers.CreateProduct)
 		grp1.GET("product/:id", Controllers.GetProductByID)
-		grp1.PUT("product/:id", Controllers.UpdateProduct)
+		grp1.PATCH("product/:id", Controllers.UpdateProduct)
 		grp1.DELETE("product/:id", Controllers.DeleteProduct)
 
 		//controlls for order

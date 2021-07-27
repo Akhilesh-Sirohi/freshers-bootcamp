@@ -2,17 +2,15 @@ package Controllers
 
 import (
 	"fmt"
-	"net/http"
-	//"github.com/retailer-api/Models"
-	"retailer-api/Models"
-
 	"github.com/gin-gonic/gin"
+	"net/http"
+	"retailer-api/Models/Product"
 )
 
 //Get All the products
 func GetProducts(c *gin.Context) {
-	var product []Models.Product
-	err := Models.GetAllProducts(&product)
+	var product []Product.Product
+	err := Product.GetAllProducts(&product)
 	if err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 	} else {
@@ -21,9 +19,9 @@ func GetProducts(c *gin.Context) {
 }
 
 func CreateProduct(c *gin.Context) {
-	var product Models.Product
+	var product Product.Product
 	c.BindJSON(&product)
-	err := Models.CreateProduct(&product)
+	err := Product.CreateProduct(&product)
 	if err != nil {
 		fmt.Println(err.Error())
 		c.AbortWithStatus(http.StatusNotFound)
@@ -35,8 +33,8 @@ func CreateProduct(c *gin.Context) {
 //get the product by Id
 func GetProductByID(c *gin.Context) {
 	id := c.Params.ByName("id")
-	var product Models.Product
-	err := Models.GetProductByID(&product, id)
+	var product Product.Product
+	err := Product.GetProductByID(&product, id)
 	if err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 	} else {
@@ -46,14 +44,14 @@ func GetProductByID(c *gin.Context) {
 
 //update the product
 func UpdateProduct(c *gin.Context) {
-	var product Models.Product
+	var product Product.Product
 	id := c.Params.ByName("id")
-	err := Models.GetProductByID(&product, id)
+	err := Product.GetProductByID(&product, id)
 	if err != nil {
 		c.JSON(http.StatusNotFound, product)
 	}
 	c.BindJSON(&product)
-	err = Models.UpdateProduct(&product)
+	err = Product.UpdateProduct(&product)
 	if err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 	} else {
@@ -64,9 +62,9 @@ func UpdateProduct(c *gin.Context) {
 
 //Delete the product
 func DeleteProduct(c *gin.Context) {
-	var product Models.Product
+	var product Product.Product
 	id := c.Params.ByName("id")
-	err := Models.DeleteProduct(&product, id)
+	err := Product.DeleteProduct(&product, id)
 	if err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 	} else {

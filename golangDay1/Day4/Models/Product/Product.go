@@ -1,10 +1,9 @@
-package Models
+package Product
 
 import (
 	"fmt"
-	"retailer-api/Config"
-
 	_ "github.com/go-sql-driver/mysql"
+	"retailer-api/Config"
 )
 
 //GetAllProducts Fetch all user data
