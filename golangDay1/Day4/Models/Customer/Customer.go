@@ -7,14 +7,20 @@ import (
 )
 
 
-//GetCustomerByID ... Fetch only one one by Id
+/*
+GetCustomerByID will Fetch the specific customer by using Customer Id
+ */
 func GetCustomerByID(customer *Customer, id string) (err error) {
 	if err = Config.DB.Where("id = ?", id).First(customer).Error; err != nil {
 		return err
 	}
 	return nil
 }
-//creates the customer
+
+
+/*
+CreateCustomer will add a new Customer to the database
+ */
 func CreateCustomer(customer *Customer) (err error) {
 	if err = Config.DB.Create(customer).Error; err != nil {
 		return err
@@ -22,13 +28,21 @@ func CreateCustomer(customer *Customer) (err error) {
 	return nil
 }
 
-//update the customer
+/*
+UpdateCustomer will update the pre-existing Customer in the database
+ */
 func UpdateCustomer(customer *Customer) (err error) {
 	//fmt.Println(customer)
 	Config.DB.Save(customer)
 	return nil
 }
 
+
+/*
+GetLastExecutedTime will return the time at which last order by the specific cutomer was processed
+if the customer doesn't exist in database then it will Createcustomer and return time 0
+if the error occurs it will return -1
+ */
 func GetLastExecutedTime(id string) int64{
 	var customer Customer
 	err:= GetCustomerByID(&customer,id)
@@ -44,6 +58,9 @@ func GetLastExecutedTime(id string) int64{
 	return customer.TimeofLastExecutedOrder
 }
 
+/*
+UpdateLastExecutedTime will update the time of last executed order to the customer
+*/
 func UpdateLastExecutedTime(id string,time int64){
 	var customer Customer
 	err:= GetCustomerByID(&customer,id)

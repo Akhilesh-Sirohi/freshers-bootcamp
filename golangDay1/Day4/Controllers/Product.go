@@ -18,6 +18,9 @@ func GetProducts(c *gin.Context) {
 	}
 }
 
+/*
+CreateProduct will add a new product to the database
+ */
 func CreateProduct(c *gin.Context) {
 	var product Product.Product
 	c.BindJSON(&product)
@@ -30,7 +33,9 @@ func CreateProduct(c *gin.Context) {
 	}
 }
 
-//get the product by Id
+/*
+GetProductById will return a specific product from the database by using product Id
+ */
 func GetProductByID(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var product Product.Product
@@ -42,7 +47,9 @@ func GetProductByID(c *gin.Context) {
 	}
 }
 
-//update the product
+/*
+UpdateProduct will update the existing product in the database
+*/
 func UpdateProduct(c *gin.Context) {
 	var product Product.Product
 	id := c.Params.ByName("id")
@@ -60,7 +67,9 @@ func UpdateProduct(c *gin.Context) {
 }
 
 
-//Delete the product
+/*
+DeleteProduct will delete a specific Product from the database by using Product Id
+ */
 func DeleteProduct(c *gin.Context) {
 	var product Product.Product
 	id := c.Params.ByName("id")
