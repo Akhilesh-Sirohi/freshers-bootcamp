@@ -8,17 +8,22 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 use Nette\Schema\ValidationException;
+use Illuminate\Support\Facades\Validator;
+
 
 class UserController extends Controller
 {
 
     public function createUser(Request $request)
     {
-        $request->validate([
-            'name'=>'required',
-            'mobile_number'=>'required',
-            'email'=>'required'
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email',
+            'mobile_number'=>'required|regex:/^[6-9][0-9]{9}$/'
         ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(),Response::HTTP_BAD_REQUEST);
+        }
 
         $user=array(
             'name'=>$request->get('name'),
@@ -29,9 +34,7 @@ class UserController extends Controller
             $id = DB::table('users')->insertGetId($user);
         }
         catch (QueryException $e){
-            return response()->json([
-                $e->errorInfo,
-            ]);
+            return response()->json($e->errorInfo, Response::HTTP_BAD_REQUEST);
 
         }
         return response()->json([
