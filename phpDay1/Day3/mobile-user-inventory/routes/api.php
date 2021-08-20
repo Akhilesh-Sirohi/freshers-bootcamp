@@ -19,15 +19,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('users',[UserController::class,'createUser']);
+Route::post('users', [UserController::class, 'createUser']);
 
-Route::get('users',[UserController::class,'getAllUsers']);
-Route::get('users/{id}',[UserController::class,'getUserById']);
-Route::get('users/name/{name}',[UserController::class,'getUserByName']);
-Route::get('users/mobile_number/{mobile_number}',[UserController::class,'getUserByMobileNumber']);
-Route::get('users/email/{email}',[UserController::class,'getUserByEmail']);
+//Route::get('users', [UserController::class, 'getAllUsers']);
 
-Route::delete('users/{id}',[UserController::class,'deleteUserById']);
-Route::delete('users/name/{name}',[UserController::class,'deleteUserByName']);
-Route::delete('users/mobile_number/{mobile_number}',[UserController::class,'deleteUserByMobileNumber']);
-Route::delete('users/email/{email}',[UserController::class,'deleteUserByEmail']);
+Route::get('users/{id?}/{name?}/{email?}/{mobile_number?}',[UserController::class,'getUserByParameter']);
+
+Route::delete('users/{id?}/{name?}/{email?}/{mobile_number?}',[UserController::class,'deleteUserByParameter']);
